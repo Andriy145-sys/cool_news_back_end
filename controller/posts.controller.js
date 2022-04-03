@@ -6,7 +6,7 @@ const response = {
     status: 200,
     result: null,
     message: null,
-    error: null,
+    error: [],
     length: 0
 }
 
@@ -58,7 +58,7 @@ exports.create = async (req, res) => {
             response.status = 500;
             response.message = "Some error occurred while creating the posts.";
             response.error.message = err.message || "Some error occurred while creating the posts.";
-            res.status(response.status).send(response);
+            res.status(200).send(response);
         });
 
 };
@@ -76,7 +76,7 @@ exports.findAllPost = (req, res) => {
             response.message = "Some error occurred while retrieving posts.";
             response.error.type = "";
             response.error.message = err.message || "Some error occurred while retrieving [posts.";
-            res.status(response.status).send(response);
+            res.status(200).send(response);
         });
 };
 
@@ -86,18 +86,18 @@ exports.updatePost = (req, res) => {
         response.message = "Invalid data";
         response.error.type = "invalid data";
         response.error.message = "Data to update can not be empty!";
-        res.status(response.status).send(response);
+        res.status(200).send(response);
     }
     if (!req.params._id) {
         response.status = 500;
         response.message = "Invalid data";
         response.error.type = "invalid data";
         response.error.message = "_id is required!";
-        res.status(response.status).send(response);
+        res.status(200).send(response);
     }
 
     if (!req.body.title) {
-        return res.status(400).send({
+        return res.status(200).send({
             status: 400,
             error: {
                 type: "Validation error",
@@ -106,7 +106,7 @@ exports.updatePost = (req, res) => {
         });
     }
     if (!req.body.author) {
-        return res.status(400).send({
+        return res.status(200).send({
             status: 400,
             error: {
                 type: "Validation error",
@@ -115,7 +115,7 @@ exports.updatePost = (req, res) => {
         });
     }
     if (!req.body.text) {
-        return res.status(400).send({
+        return res.status(200).send({
             status: 400,
             error: {
                 type: "Validation error",
@@ -151,7 +151,7 @@ exports.updatePost = (req, res) => {
             response.message = "Invalid id";
             response.error.type = "invalid id";
             response.error.message = `Error updating Post with id=${id}.`;
-            res.status(response.status).send(response);
+            res.status(200).send(response);
         });
 }
 
@@ -172,7 +172,7 @@ exports.findPostById = (req, res) => {
             response.error.type = "Invalid id";
             response.error.message = "Some error occurred while retrieving get post.";
             res.status(response.status).send(response);
-            res.status(500).send({
+            res.status(200).send({
                 message: 'Failed to get post for selected id.',
             });
         });
@@ -202,7 +202,7 @@ exports.deletePost = async (req, res) => {
             response.message = "Invalid id";
             response.error.type = "invalid id";
             response.error.message = `Could not delete post with id=${id}.`;
-            res.status(response.status).send(response);
+            res.status(200).send(response);
         });
 
 };
@@ -223,6 +223,6 @@ exports.getAuthorPosts = async (req, res) => {
             response.message = "Invalid author id.";
             response.error.type = "Invalid author id";
             response.error.message = "Failed to get posts by selected author id.";
-            res.status(response.status).send(response);
+            res.status(200).send(response);
         });
 };

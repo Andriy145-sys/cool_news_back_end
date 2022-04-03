@@ -32,7 +32,8 @@ app.use('/uploads', express.static(__dirname + '/public/uploads'));
 
 //routes
 app.use('/posts', require('./routes/api/posts'))
-app.use('/auth', require('./routes/api/user'))
+app.use('/auth', require('./routes/api/auth'))
+app.use('/user', require('./routes/api/user'))
 
 //DB
 function start() {
