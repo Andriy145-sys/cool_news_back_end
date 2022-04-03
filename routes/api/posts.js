@@ -7,9 +7,9 @@ router.post("/", posts.create);
 
 router.post("/:_id", posts.updatePost);
 
-router.get("/", posts.findAllPost);
+router.get("/:page", posts.findAllPost);
 
-router.get("/:authorId/posts", posts.getAuthorPosts);
+router.get("/:authorId/posts/:page", posts.getAuthorPosts);
 
 router.get("/:_id", posts.findPostById);
 

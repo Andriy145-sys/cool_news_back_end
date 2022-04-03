@@ -20,12 +20,21 @@ exports.create = async (req, res) => {
             }
         });
     }
-    if (!req.body.author) {
+    if (!req.body.author_id) {
         return res.status(400).send({
             status: 400,
             error: {
                 type: "Validation error",
-                message: "Author is required"
+                message: "author_id is required"
+            }
+        });
+    }
+    if (!req.body.author_username) {
+        return res.status(400).send({
+            status: 400,
+            error: {
+                type: "Validation error",
+                message: "author_username is required"
             }
         });
     }
@@ -41,7 +50,8 @@ exports.create = async (req, res) => {
 
     const posts = new Posts({
         title: req.body.title,
-        author: req.body.author,
+        author_id: req.body.author_id,
+        author_username: req.body.author_username,
         text: req.body.text,
         img: req.body.img
     });
@@ -64,8 +74,23 @@ exports.create = async (req, res) => {
 };
 
 exports.findAllPost = (req, res) => {
-    Posts.find()
+    let skip = 0
+    let limit = 10
+    let countPosts = 0
+
+    Posts.count((err, count) => {
+        console.log(count);
+        countPosts = count;
+    })
+    if (req.params.page) {
+        skip = limit * (req.params.page - 1)
+    }
+    Posts.find().limit(limit).skip(skip)
+        .sort({
+            date_of_create: 'desc'
+        })
         .then(data => {
+            response.total_items = countPosts;
             response.length = data.length;
             response.result = data;
             response.message = "Success get all posts"
@@ -208,13 +233,24 @@ exports.deletePost = async (req, res) => {
 };
 
 exports.getAuthorPosts = async (req, res) => {
+    let skip = 0
+    let limit = 10
+
+    if (req.params.page) {
+        skip = limit * (req.params.page - 1)
+    }
     Posts.find({
-        author: req.params.authorId,
+        author_id: req.params.authorId,
     })
+        .limit(limit).skip(skip)
+        .sort({
+            date_of_create: 'desc'
+        })
         .then(data => {
             response.length = data.length;
             response.result = data;
             response.message = "Success find posts by author"
+            response.total_items = data.length;
             res.send(response);
         })
         .catch(err => {

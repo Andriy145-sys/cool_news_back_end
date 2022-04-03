@@ -108,6 +108,8 @@ exports.login = (req, res) => {
                 .pbkdf2Sync(req.body.password, user.salt, 1000, 64, `sha512`)
                 .toString(`hex`);
             if (user.hash == hash) {
+                response.status = 200;
+                response.error = {};
                 response.message = "Login is success";
                 response.result = {_id : user._id};
                 user.save();
@@ -117,7 +119,7 @@ exports.login = (req, res) => {
                 response.message = "Invalid password";
                 response.error.type = "invalid password";
                 response.error.message = `Inccorect password`;
-                return res.status(400).send(response);
+                return res.status(200).send(response);
             }
         }
     });

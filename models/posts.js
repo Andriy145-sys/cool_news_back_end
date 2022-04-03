@@ -12,15 +12,19 @@ module.exports = mongoose => {
                 required: true
             },
             img: {
-                type:String 
+                type: String
             },
-            author :{
+            author_id: {
                 type: Schema.Types.ObjectId,
                 ref: 'users'
             },
+            author_username: {
+                type: String,
+                required: true
+            },
             date_of_create: {
-                type: Date,
-                default: Date.now()
+                type: String,
+                default: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
             }
         })
     )
