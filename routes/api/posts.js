@@ -11,7 +11,7 @@ router.get("/:page", posts.findAllPost);
 
 router.get("/:authorId/posts/:page", posts.getAuthorPosts);
 
-router.get("/:_id", posts.findPostById);
+router.get("/post/:_id", posts.findPostById);
 
 router.delete("/:_id", posts.deletePost);
 

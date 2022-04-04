@@ -3,19 +3,7 @@ const cors = require("cors")
 
 const app = express()
 
-// Middleware
-app.use(express.static(__dirname + "/public"));
-
-app.use(express.urlencoded({
-    limit: '15mb',
-    extended: true,
-}));
-
-app.use(express.json({
-    limit: '15mb',
-}));
-
-var allowedOrigins = ['http://localhost:8080'];
+var allowedOrigins = ['http://localhost:8080', 'http://localhost:8081'];
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin) return callback(null, true);
@@ -27,8 +15,6 @@ app.use(cors({
         return callback(null, true);
     }
 }));
-
-app.use('/uploads', express.static(__dirname + '/public/uploads'));
 
 //routes
 app.use('/posts', require('./routes/api/posts'))
