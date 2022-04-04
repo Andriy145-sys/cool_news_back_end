@@ -45,8 +45,9 @@ function start() {
     });
 
     //Port
-    app.listen(8000, () => {
-        console.log("Server running on http://localhost:8000");
+    app.listen(process.env.PORT || 8000, () => {
+        const port = server.address().port;
+        console.log(`Express is working on port ${port}`);
     });
 }
 
