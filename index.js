@@ -3,6 +3,10 @@ const cors = require("cors")
 
 const app = express()
 
+app.get('/', (req, res) => {
+    res.end(`<h1>Home page</h1>`)
+})
+
 app.use(express.static(__dirname + "/public"));
 
 app.use(express.urlencoded({
