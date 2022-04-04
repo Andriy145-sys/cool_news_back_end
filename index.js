@@ -45,9 +45,8 @@ function start() {
     });
 
     //Port
-    app.listen(process.env.PORT || 8000, () => {
-        const port = server.address().port;
-        console.log(`Express is working on port ${port}`);
+    app.listen(process.env.PORT || 5000, () => {
+        console.log(`Express is working on port`);
     });
 }
 
