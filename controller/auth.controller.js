@@ -12,6 +12,13 @@ let response = {
 
 // Create a new User
 exports.create = async (req, res) => {
+    if (!req.body.username) {
+        response.status = 401;
+        response.error.type = "Validation error",
+        response.error.message = "username is required"
+        response.message = "Validation error"
+        return res.status(200).send(response);
+    }
 
     let isValidUsername = await this.checkUsername(req.body.username);
 
@@ -19,6 +26,14 @@ exports.create = async (req, res) => {
         response.status = 401;
         response.error.type = "Unique username",
         response.error.message = "The username field must contain a unique value"
+        response.message = "Validation error"
+        return res.status(200).send(response);
+    }
+
+    if (!req.body.email) {
+        response.status = 400;
+        response.error.type = "Validation error",
+        response.error.message = "email is required"
         response.message = "Validation error"
         return res.status(200).send(response);
     }
@@ -33,34 +48,12 @@ exports.create = async (req, res) => {
         return res.status(200).send(response);
     }
 
-    if (!req.body.username) {
-        return res.status(200).send({
-            status: 400,
-            error: {
-                type: "Validation error",
-                message: "username is required"
-            }
-        });
-    }
-
-    if (!req.body.email) {
-        return res.status(200).send({
-            status: 400,
-            error: {
-                type: "Validation error",
-                message: "email is required"
-            }
-        });
-    }
-
     if (!req.body.password) {
-        return res.status(200).send({
-            status: 400,
-            error: {
-                type: "Validation error",
-                message: "password is required"
-            }
-        });
+        response.status = 401;
+        response.error.type = "Validation error",
+        response.error.message = "password is required"
+        response.message = "Validation error"
+        return res.status(200).send(response);
     }
 
     //hashing pass
