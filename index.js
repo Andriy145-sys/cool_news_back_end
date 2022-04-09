@@ -18,7 +18,7 @@ app.use(express.json({
     limit: '15mb',
 }));
 
-var allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://andriy145-sys.github.io/'];
+var allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'https://andriy145-sys.github.io'];
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin) return callback(null, true);
